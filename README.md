@@ -1,5 +1,4 @@
-# DAPP-COMPONENT-TEMPLATE-contracts-Solidity
-Dapp component repo template of smart contracts in Solidity.
+# ERC20 Token Exchange Smart Contracts using Uniswap protocol
 
 ## Project description
 
