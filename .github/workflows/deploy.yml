@@ -1,0 +1,46 @@
+name: Deploy contracts
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install packages
+        run: npm install
+
+      - name: Deploy contracts
+        run: npx hardhat run scripts/deploy.js --network {{ secrets.NETWORK_NAME }}
+      
+      - name: Push directory to another repository
+        # You may pin to the exact commit or the version.
+        # uses: cpina/github-action-push-to-another-repository@74596b72fae72d9b7b79e1b2992863c0f595c801
+        uses: cpina/github-action-push-to-another-repository@v1.5.1
+        with:
+          # Source before directory from the origin directory
+          source-before-directory: artifacts
+          # Source directory from the origin directory
+          source-directory: artifacts
+          # Name of the destination username/organization
+          destination-github-username: ${{ secrets.DESTINATION_USERNAME }}
+          # Destination repository
+          destination-repository-name: ${{ secrets.DESTINATION }}
+          # Email for the git commit
+          user-email: ${{ secrets.USER_EMAIL }}
+          # Github server
+          github-server: # optional, default is github.com
+          # [Optional] Name for the git commit. Defaults to the destination username/organization name
+          user-name: ${{ secrets.USER_NAME}}
+          # [Optional] Username/organization for the destination repository
+          destination-repository-username: # optional, default is 
+          # [Optional] set target branch name for the destination repository. Defaults to "main"
+          target-branch: # optional, default is main
+          # [Optional] commit message for the output repository. ORIGIN_COMMIT is replaced by the URL@commit in the origin repo
+          commit-message: # optional, default is Update from ORIGIN_COMMIT
+          # [Optional] The directory to wipe and replace in the target repository
+          target-directory: # optional, default is 

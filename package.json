@@ -1,0 +1,55 @@
+{
+  "name": "",
+  "version": "",
+  "description": "",
+  "dependencies": {
+    "hardhat": "^2.12.2",
+    "solidity-docgen": "^0.6.0-beta.30"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": ""
+  },
+  "devDependencies": {
+    "ganache-cli": "^6.12.2",
+    "husky": "^8.0.2",
+    "prettier": "^2.7.1",
+    "prettier-plugin-solidity": "^1.0.0",
+    "solhint": "^3.3.7",
+    "solhint-plugin-prettier": "^0.0.5",
+    "solidity-coverage": "^0.8.2",
+    "eslint": "^8.28.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "buddy.js": "^0.9.3"
+  },
+  "scripts": {
+    "test": "hardhat test",
+    "prepare": "husky install",
+    "solhint": "solhint -f table contracts/**/*.sol",
+    "prettier:solidity": "prettier --write contracts/**/*.sol",
+    "generate-docs": "hardhat docgen",
+    "lint": "eslint --fix \"**/*.js\"",
+    "lint:ci": "eslint \"**/*.js\"",
+    "buddy": "buddy -e src/ && buddy -e test/",
+    "prettier": "prettier . --write",
+    "prettier:ci": "prettier .",
+    "coverage": "hardhat coverage --network localhost"
+  },
+  "lint-staged": {
+    "{src,test,tasks}/**/*.js": [
+      "npm run prettier",
+      "npm run lint",
+      "npm run buddy"
+    ],
+    "contracts/**/*.sol": [
+      "npm run prettier:solidity",
+      "npm run solhint"
+    ]
+  }
+}
